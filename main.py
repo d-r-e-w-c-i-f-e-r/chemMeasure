@@ -1,43 +1,50 @@
+import os.path
 import tkinter.messagebox
 from tkinter import *
-from tkinter import ttk
-from resources.TextAndButton import TextAndButton
+from tkinter import ttk, filedialog
 
 
 window = Tk()
-style = ttk.Style()
-style.map('C.TButton',
-          foreground=[('pressed', 'red'), ('active', 'blue')],
-          background=[('pressed', '!disabled', 'black'), ('active', 'white')]
-          )
-
 window.title("Chem Measurement Wizard")
-window.geometry("1000x1000+10+20")
+window.geometry("600x200")
 
 
-def execute():
-    alert = tkinter.messagebox.showinfo(title='!!!TEST!!!', message='!!!THIS IS A TEST!!!')
+def open_file():
+    file = filedialog.askopenfile(mode='r', filetypes=[('MP4 Video', '*.mp4')])
+    if file:
+        fp.config(text=os.path.abspath(file.name))
+        print("file read")
+        file.close()
 
-def print_input():
-    input = inputtxt.get(1.0, "end-1c")
-    lbl.config(text='Provided Input: '+input)
 
-inputtxt = tkinter.Text(window,
-                        height=5,
-                        width=20)
-inputtxt.pack()
+# args:
+#   video | type: FILE
+#   mag | type: number
+def process():
+    print("processing video")
 
-colored_btn = ttk.Button(text='press', style='C.TButton', command=lambda: execute())
-print_btn = ttk.Button(text='Print', command=print_input).pack()
 
-lbl = tkinter.Label(window, text='')
-lbl.pack()
+top_frame = Frame(window)
+top_frame.pack()
+fp = tkinter.Label(top_frame, text='')
+fp.pack(side=LEFT)
+browse_button = ttk.Button(top_frame, text='Browse', command=open_file).pack(side=LEFT, pady=20)
 
-test_text = tkinter.Text(window,
-                         height=5,
-                         width=20)
+mid_frame = Frame(window)
+mid_frame.pack()
+# this is where the magnification selection will live
+mag = 1
+mag_lbl = tkinter.Label(mid_frame, text='Magnification: ').pack(side=LEFT)
+mag_scale = tkinter.Scale(mid_frame, variable=mag, from_=1, to=100, showvalue=0, orient=HORIZONTAL)
+x = tkinter.Label(mid_frame, text='x').pack(side=RIGHT, padx=0)
+mag_val = tkinter.Label(mid_frame, textvariable=mag).pack(side=RIGHT)
+mag_scale.pack()
 
-# test = TextAndButton(window, test_text, colored_btn)
+
+bottom_frame = Frame(window)
+bottom_frame.pack()
+# this is where the run button will live
+run = ttk.Button(bottom_frame, text='Run', command=process).pack(pady=20)
 
 # run the app
 window.mainloop()
