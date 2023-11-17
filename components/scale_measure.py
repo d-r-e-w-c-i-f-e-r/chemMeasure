@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+# og value was 227
 
 def measure_pixels(image_path, reference_length):
     # Load the image

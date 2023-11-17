@@ -50,6 +50,7 @@ class Window:
         label.pack(side="left")
         min_dist = ttk.Entry(frame_3, validate="key",
                              validatecommand=(validation, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W'))
+        min_dist.insert(0, "1")
         min_dist.pack(side="left")
 
         # div4
@@ -60,6 +61,7 @@ class Window:
         label.pack(side="left")
         param_1 = ttk.Entry(frame_4, validate="key",
                             validatecommand=(validation, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W'))
+        param_1.insert(0, "100")
         param_1.pack(side="left")
 
         # div5
@@ -70,6 +72,7 @@ class Window:
         label.pack(side="left")
         param_2 = ttk.Entry(frame_5, validate="key",
                             validatecommand=(validation, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W'))
+        param_2.insert(0, "30")
         param_2.pack(side="left")
 
         # div6
@@ -80,6 +83,7 @@ class Window:
         label.pack(side="left")
         min_rad = ttk.Entry(frame_6, validate="key",
                             validatecommand=(validation, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W'))
+        min_rad.insert(0, "30")
         min_rad.pack(side="left")
 
         # div7
@@ -90,6 +94,7 @@ class Window:
         label.pack(side="left")
         max_rad = ttk.Entry(frame_7, validate="key",
                             validatecommand=(validation, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W'))
+        max_rad.insert(0, "0")
         max_rad.pack(side="left")
 
         # this is where the run button will live
@@ -131,17 +136,17 @@ class Window:
 
         result = {
             "file": fp.cget("text"),
-            "scale": scale.get(),
-            "min_dist": min_d.get() if min_d.get() else 1,
-            "p1": p1.get() if p1.get() else 300,
-            "p2": p2.get() if p2.get() else 180,
-            "min_rad": min_r.get() if min_r.get() else 30,
-            "max_rad": max_r.get() if max_r.get() else 0
+            "scale": int(scale.get()),
+            "min_dist": float(min_d.get()),
+            "p1": float(p1.get()),
+            "p2": float(p2.get()),
+            "min_rad": int(min_r.get()),
+            "max_rad": int(max_r.get())
         }
-        print(result)
         self.run(result)
 
-    def run(self, values):
+    @staticmethod
+    def run(values):
         core = Processor(
             values["file"],
             values["scale"],
@@ -151,4 +156,5 @@ class Window:
             values["min_rad"],
             values["max_rad"],
         )
+
         core.run()
