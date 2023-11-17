@@ -12,6 +12,8 @@ _Notes:_
   - [ ] Remember to replace values in math calculations to the result of the scale calculator
     - [ ] and to min dist, min rad, and max rad
 - [ ] add num circles param
+- [ ] add circle detector debugging
+- [ ] add the diameter of the overlapping section of the circles (DIB diameter)
 
 
 Possible solution for outlier circles is to have a running average for the size of a given circle and if the result is a

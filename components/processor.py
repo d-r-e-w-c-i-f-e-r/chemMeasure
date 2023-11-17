@@ -7,7 +7,7 @@ from components.video import Video
 class Processor:
 
     def __init__(self, fp, scale, md, p1, p2, min_r, max_r):
-        self.vid = Video(fp, 1440)
+        self.vid = Video(fp, 12)
         self.frames = self.vid.get_frames()
         self.scale = scale
         self.md = md
@@ -15,7 +15,7 @@ class Processor:
         self.p2 = p2
         self.min_r = min_r
         self.max_r = max_r
-        self.see_frames = True
+        self.see_frames = False
 
     def run(self):
         count = 0
@@ -29,8 +29,8 @@ class Processor:
             blurred = cv2.GaussianBlur(frame, (5, 5), 0)
             gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
             edges = cv2.Sobel(gray, cv2.CV_8UC1, 1, 0, ksize=3)
-            cv2.imshow("Detected Circle", edges)
-            cv2.waitKey(0)
+            # cv2.imshow("Detected Circle", edges)
+            # cv2.waitKey(0)
             detected_circles = cv2.HoughCircles(edges,
                                                 cv2.HOUGH_GRADIENT, dp=2, minDist=self.md, param1=self.p1,
                                                 param2=self.p2, minRadius=self.min_r, maxRadius=self.max_r)
